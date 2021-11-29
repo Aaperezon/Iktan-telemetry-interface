@@ -32,7 +32,6 @@ let init = () => {
         chart.data.labels.push(label);
         (chart.data.datasets).forEach((dataset,index) => {
             dataset.data.push(data[index]);
-
         });
         chart.data.labels.shift();
         chart.data.datasets.forEach((dataset) => {
