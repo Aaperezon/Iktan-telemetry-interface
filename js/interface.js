@@ -12,7 +12,7 @@ let init = () => {
         var temporal_data1 = Math.round(Math.random()* (30 - 25) + 25)
         updateSimpleChart(chart_temperature, "Temperature: "+temporal_data1+"°C",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data1)
         var temporal_data2 = Math.round(Math.random()* (80 - 70) + 70)
-        updateSimpleChart(chart_humidity, "Humidity: "+temporal_data2+"",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data2)
+        updateSimpleChart(chart_humidity, "Humidity: "+temporal_data2+"g/m3",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data2)
         var temporal_data3 = Math.round(Math.random()* (130 - 70) + 70)
         updateSimpleChart(chart_heart1_rate, "Heart Rate1: "+temporal_data3+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data3)
         var temporal_data4 = Math.round(Math.random()* (130 - 70) + 70)
@@ -251,19 +251,22 @@ let init = () => {
             labels: ["0","0","0","0","0","0","0","0","0","0"],
             datasets: 
             [{
-                data: [50,	0,	0,	0,	0,	0,	0,	10,	0, 0], // Specify the data values array
+                label: "Roll",
+                data: [0,	0,	0,	0,	0,	0,	0,	0,	0, 0], // Specify the data values array
                 fill: true,
                 borderColor: 'rgba(0,150,200,.33)', // Add custom color border (Line)
                 backgroundColor: 'rgba(0,200,0,.33)', // Add custom color background (Points and Fill)
                 borderWidth: 2 // Specify bar border width
             },{
-                data: [0,	0,	0,	10,	0,	0,	0,	0,	0, 0], // Specify the data values array
+                label: "Pitch",
+                data: [0,	0,	0,	0,	0,	0,	0,	0,	0, 0], // Specify the data values array
                 fill: true,
                 borderColor: 'rgba(100,150,200,.33)', // Add custom color border (Line)
                 backgroundColor: 'rgba(100,200,0,.33)', // Add custom color background (Points and Fill)
                 borderWidth: 2 // Specify bar border width
             },{
-                data: [0,	30,	0,	10,	0,	0,	30,	0,	0, 0], // Specify the data values array
+                label: "Yaw",
+                data: [0,0,	0,	0,	0,	0,	0,	0,	0, 0], // Specify the data values array
                 fill: true,
                 borderColor: 'rgba(200,150,200,.33)', // Add custom color border (Line)
                 backgroundColor: 'rgba(200,200,0,.33)', // Add custom color background (Points and Fill)
@@ -281,7 +284,11 @@ let init = () => {
                     text: 'Roll Pitch Yaw',
                 },
                 legend: {
-                    display: false
+                    display: true,
+                    labels: {
+                        color: 'rgba(0,0,0,1)'
+                    }
+                   
                 }
             },
             // responsive: true, 
@@ -296,7 +303,25 @@ let init = () => {
         },
        
     });
+    var map = L.map('map').setView([18.9261,-99.23075], 13);
+    var greenIcon = L.icon({
+        iconUrl: 'source/rover.jpg',
+        iconSize:     [38, 95], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYTAxNDIyNTI0IiwiYSI6ImNrd2xlb3llcDIweHMydW1wc3B0anE3Z2gifQ.DS0R3LyBlPpgQNZ8zKr_BA'
+    }).addTo(map);
+    L.marker([18.9261,-99.23075], {icon: greenIcon}).addTo(map);
+
 
 
 }
-addEventListener("DOMContentLoaded", init)
+window.addEventListener('DOMContentLoaded', init)
