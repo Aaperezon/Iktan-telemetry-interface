@@ -6,26 +6,57 @@ let init = () => {
     let ctx_speed = document.getElementById("speed_canvas").getContext('2d');
     let ctx_mpu = document.getElementById("mpu_canvas").getContext('2d');
     let title_size = 40
-    window.setInterval(updateCharts,1000);
-    function updateCharts(){
-        let global_time = new Date();
-        var temporal_data1 = Math.round(Math.random()* (30 - 25) + 25)
-        updateSimpleChart(chart_temperature, "Temperature: "+temporal_data1+"°C",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data1)
-        var temporal_data2 = Math.round(Math.random()* (80 - 70) + 70)
-        updateSimpleChart(chart_humidity, "Humidity: "+temporal_data2+"g/m3",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data2)
-        var temporal_data3 = Math.round(Math.random()* (130 - 70) + 70)
-        updateSimpleChart(chart_heart1_rate, "Heart Rate1: "+temporal_data3+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data3)
-        var temporal_data4 = Math.round(Math.random()* (130 - 70) + 70)
-        updateSimpleChart(chart_heart2_rate, "Heart Rate2: "+temporal_data4+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data4)
-        var temporal_data5 = Math.round(Math.random()* (26 - 0) + 0)
-        updateSimpleChart(chart_speed, "Speed: "+temporal_data5+"Km/h",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temporal_data5)
-        
-        var temporal_data6 = Math.round(Math.random()* (180 - 0) + 0)
-        var temporal_data7 = Math.round(Math.random()* (180 - 0) + 0)
-        var temporal_data8 = Math.round(Math.random()* (180 - 0) + 0)
-        updateMultiChart(chart_mpu, "Roll: "+temporal_data6+"° Pitch: "+temporal_data7+"° Roll: "+temporal_data8+"°",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  {0: temporal_data6, 1: temporal_data7,2:temporal_data8} )
+    window.setInterval(updateEverything,1000);
 
+
+
+    function updateEverything(){
+        var temperature_data, humidity_data, heart_rate1_data, heart_rate2_data, speed_data, 
+        roll_data, pitch_data, yaw_data, latitude_data, longitude_data
+        fetch('./service/readsensor.php', {
+            method: 'GET',
+        }).then(
+            response => response.json()
+        ).then(
+            response => {
+                temperature_data = response[0][4]
+                humidity_data = response[0][5]
+                heart_rate1_data = response[0][2]
+                heart_rate2_data = response[0][3]
+                speed_data = response[0][6]
+                roll_data = response[0][7]
+                pitch_data = response[0][8]
+                yaw_data = response[0][9]
+                latitude_data = response[0][10]
+                longitude_data = response[0][11]
+                let global_time = new Date();
+                updateSimpleChart(chart_temperature, "Temperature: "+temperature_data+"°C",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temperature_data)
+                updateSimpleChart(chart_humidity, "Humidity: "+humidity_data+"g/m3",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  humidity_data)
+                updateSimpleChart(chart_heart1_rate, "Heart Rate1: "+heart_rate1_data+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  heart_rate1_data)
+                updateSimpleChart(chart_heart2_rate, "Heart Rate2: "+heart_rate2_data+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  heart_rate2_data)
+                updateSimpleChart(chart_speed, "Speed: "+speed_data+"km/h",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  speed_data)
+                updateMultiChart(chart_mpu, "Roll: "+roll_data+"° Pitch: "+pitch_data+"° Roll: "+yaw_data+"°",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  {0: roll_data, 1: pitch_data,2:yaw_data} )
+               
+                updateMap(latitude_data, longitude_data)
+            }
+        ).catch(
+            error => console.log(error)
+        )
+
+        // var temperature_data = Math.round(Math.random()* (30 - 25) + 25)
+        // var humidity_data = Math.round(Math.random()* (80 - 70) + 70)
+        // var heart_rate1_data = Math.round(Math.random()* (130 - 70) + 70)
+        // var heart_rate2_data = Math.round(Math.random()* (130 - 70) + 70)
+        // var speed_data = Math.round(Math.random()* (26 - 0) + 0)
+        // var roll_data = Math.round(Math.random()* (180 - 0) + 0)
+        // var pitch_data = Math.round(Math.random()* (180 - 0) + 0)
+        // var yaw_data = Math.round(Math.random()* (180 - 0) + 0)
+        // latitude_data += Math.random()/10000
+        // longitude_data += Math.random()/10000
+
+     
     }
+  
     function updateMultiChart(chart, title, label, data) {
         chart.options.plugins.title.text = title;
 
@@ -303,25 +334,50 @@ let init = () => {
         },
        
     });
-    var map = L.map('map').setView([18.9261,-99.23075], 13);
-    var greenIcon = L.icon({
-        iconUrl: 'source/rover.jpg',
-        iconSize:     [38, 95], // size of the icon
-        shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+    var done_map_view = false
+    var map, marker
+    function updateMap(latitude, longitude){
+        if (!done_map_view){
+            if(temp_lat != null && temp_lon != null){
+                map = L.map('map').setView([temp_lat,temp_lon], 19);
+                var greenIcon = L.icon({
+                    iconUrl: 'source/rover.jpg',
+                    iconSize:     [38, 95], // size of the icon
+                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    accessToken: 'pk.eyJ1IjoiYTAxNDIyNTI0IiwiYSI6ImNrd2xlb3llcDIweHMydW1wc3B0anE3Z2gifQ.DS0R3LyBlPpgQNZ8zKr_BA'
+                }).addTo(map);
+                marker = L.marker([temp_lat,temp_lon], {icon: greenIcon}).addTo(map);
+                done_map_view = true
+            }
+           
+        }else{
+            marker.setLatLng([latitude, longitude]).update();  // Updates your defined marker position
+        }
+    }  
+    /* FOR THE NEXT FEW LINES: IMPLEMENTATION JUST FOR SIMULATION PURPOSES, THIS IS COMMING FROM A GPS SENSOR*/
+    navigator.geolocation.getCurrentPosition((pos)=>{
+        var crd = pos.coords;
+        console.log('Latitude : ' + crd.latitude);
+        console.log('Longitude: ' + crd.longitude);
+        temp_lat = crd.latitude
+        temp_lon = crd.longitude
+    }, (err)=>{
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+    }, {
+        enableHighAccuracy: true,
+        timeout: 1000,
+        maximumAge: 0
     });
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoiYTAxNDIyNTI0IiwiYSI6ImNrd2xlb3llcDIweHMydW1wc3B0anE3Z2gifQ.DS0R3LyBlPpgQNZ8zKr_BA'
-    }).addTo(map);
-    L.marker([18.9261,-99.23075], {icon: greenIcon}).addTo(map);
-
-
-
+    /* ====================================================================================================== */ 
+  
+   
 }
 window.addEventListener('DOMContentLoaded', init)
