@@ -6,7 +6,7 @@ let init = () => {
     let ctx_speed = document.getElementById("speed_canvas").getContext('2d');
     let ctx_mpu = document.getElementById("mpu_canvas").getContext('2d');
     let title_size = 40
-    window.setInterval(updateEverything,1000);
+    window.setInterval(updateEverything,500);
 
 
 
@@ -35,7 +35,7 @@ let init = () => {
                 updateSimpleChart(chart_heart1_rate, "Heart Rate1: "+heart_rate1_data+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  heart_rate1_data)
                 updateSimpleChart(chart_heart2_rate, "Heart Rate2: "+heart_rate2_data+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  heart_rate2_data)
                 updateSimpleChart(chart_speed, "Speed: "+speed_data+"km/h",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  speed_data)
-                updateMultiChart(chart_mpu, "Roll: "+roll_data+"° Pitch: "+pitch_data+"° Roll: "+yaw_data+"°",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  {0: roll_data, 1: pitch_data,2:yaw_data} )
+                updateMultiChart(chart_mpu, "Roll: "+roll_data+"° Pitch: "+pitch_data+"° Yaw: "+yaw_data+"°",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  {0: roll_data, 1: pitch_data,2:yaw_data} )
                
                 updateMap(latitude_data, longitude_data)
             }
