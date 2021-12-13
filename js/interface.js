@@ -363,6 +363,7 @@ let init = () => {
         }
     }  
     /* FOR THE NEXT FEW LINES: IMPLEMENTATION JUST FOR SIMULATION PURPOSES, THIS IS COMMING FROM A GPS SENSOR*/
+    var temp_lat = 18.873980, temp_lon = -99.196038
     navigator.geolocation.getCurrentPosition((pos)=>{
         var crd = pos.coords;
         console.log('Latitude : ' + crd.latitude);

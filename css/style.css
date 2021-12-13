@@ -1,5 +1,28 @@
 #map{
     position: fixed;
+    right: 0;
     height: 70vh;
     width: 32vw;
 }
+.mobile{
+    display : none;
+}
+
+
+
+
+ @media only screen and (max-width: 1000px){
+     /* For mobiles:  */
+    #map{
+        position : fixed;
+        left : 30vw; right : 30vw; top : 10vw;
+        height: 50vh; 
+        width: 40vw;
+    }
+    .desktop{
+        display : none;
+    }
+    .mobile{
+        display : block;
+    }
+} 
