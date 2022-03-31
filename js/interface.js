@@ -31,7 +31,7 @@ let init = () => {
                 longitude_data = response[0][11]
                 let global_time = new Date();
                 updateSimpleChart(chart_temperature, "Temperature: "+temperature_data+"°C",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  temperature_data)
-                updateSimpleChart(chart_humidity, "Humidity: "+humidity_data+"g/m3",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  humidity_data)
+                updateSimpleChart(chart_humidity, "Humidity: "+humidity_data+"% RH",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  humidity_data)
                 updateSimpleChart(chart_heart1_rate, "Heart Rate1: "+heart_rate1_data+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  heart_rate1_data)
                 updateSimpleChart(chart_heart2_rate, "Heart Rate2: "+heart_rate2_data+"BPM",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  heart_rate2_data)
                 updateSimpleChart(chart_speed, "Speed: "+speed_data+"km/h",global_time.getHours()+":"+global_time.getMinutes()+":"+global_time.getSeconds(),  speed_data)

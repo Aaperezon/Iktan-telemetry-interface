@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArPInterface</title>
+    <title>IktanRovingTelemetry </title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -33,7 +33,6 @@
               <canvas id="heart_rate2_canvas" style="min-height: 25vh;"></canvas>
             </div>
             <div class="col">
-                
             </div>
         </div>
 
@@ -45,7 +44,6 @@
                 <canvas id="humidity_canvas" style="min-height: 23vh;"></canvas>
             </div>
             <div class="col">
-
             </div>
         </div>
         <div class="row">
@@ -61,51 +59,56 @@
               <canvas id="mpu_canvas" style="min-height: 25vh;"></canvas>
             </div>
             <div class="col">
-
             </div>
         </div>
     </div>
 
     <!-- mobile -->
-    <div class= "mobile container">
-        <div class = "row">
-            <div class = "col-2">
-                <div> 
+    <div class= "mobile container" style="min-width: 100vw; min-height: 100vh; max-width: 100vw; max-height: 100vh;">
+        <div class="row">
+            <div class="col-3" style="border-style: solid;">
+                <div > 
                     <h1>HEALTH</h1>
-                    
                     <div class = "row">
-                        <div class = "col">
-
-                            <div class = "row">
-                                <h6> PILOT</h6>
-
-                            </div>
-                            <div class = "row">
-                                <img src="./source/heart.png" style="max-width: 50px; max-height: 50px;">
-                            </div> 
+                        <div class = "col-4">
+                            <center>
+                                <div class = "row">
+                                    <h6> PILOT</h6>
+                                </div>
+                                <div class = "row">
+                                    <img src="./source/heart.png" style="max-width: 50px; max-height: 50px;">
+                                </div> 
+                            </center>
                         </div>
-
                         <div class = "col">
-                            <h3>100 BPM</h3>
+                            <h3 id="heart_rate1">100 BPM</h3>
+                        </div>                                
+                    </div>
+                    <div class = "row">
+                        <div class = "col-4">
+                            <center>
+                                <div class = "row">
+                                    <h6> PILOT</h6>
+                                </div>
+                                <div class = "row">
+                                    <img src="./source/heart.png" style="max-width: 50px; max-height: 50px;">
+                                </div> 
+                            </center>
+                        </div>
+                        <div class = "col">
+                            <h3 id="heart_rate2">100 BPM</h3>
                         </div>                                
                     </div>
                 </div>
             </div>
 
-            <div class = "col-8">
+            <div class="col-6" style="border-style: solid; border-color: blue;">
 
             </div>
-            <div class = "col-2">
+            <div class = "col-3" style="border-style: solid;">
 
             </div>
         </div>
-        
-
-
-
-              
-     </div>
-
     </div>
 
 </body>
