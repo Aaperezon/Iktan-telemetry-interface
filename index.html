@@ -37,11 +37,60 @@
         </div>
 
         <div class="row">
-            <div class="col-4">
-                <canvas id="temperature_canvas" style="min-height: 23vh;"></canvas>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col" >
+                        <center>
+                            <span id="gravity1_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col">
+                        <center>
+                            <span id="lightlevel1_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col" >
+                        <center>
+                            <span id="humidity_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col">
+                        <center>
+                            <span id="gasCO2_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <span id="gravity2_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col">
+                        <center>
+                            <span id="lightlevel2_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col">
+                        <center>
+                            <span id="weight1_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col">
+                        <center>
+                            <span id="weight2_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                    <div class="col">
+                        <center>
+                            <span id="temperature_data" class="badge bg-warning text-dark" style="font-size:26px; margin-top: 20px;"> </span>
+                        </center>
+                    </div>
+                </div>
             </div>
-            <div class="col-4">
-                <canvas id="humidity_canvas" style="min-height: 23vh;"></canvas>
+            <div class="col">
             </div>
             <div class="col">
             </div>
@@ -59,6 +108,11 @@
               <canvas id="mpu_canvas" style="min-height: 25vh;"></canvas>
             </div>
             <div class="col">
+                <img id="vibration1" src="source/vibration_dot_NULL.png" style="position: absolute; z-index: 2; max-width: 50px; margin-left: 350px; margin-top: 20 px;">
+                <img id="vibration2" src="source/vibration_dot_NULL.png" style="position: absolute; z-index: 2; max-width: 50px; margin-left: 350px; margin-top: 145px;">
+                <img id="vibration3" src="source/vibration_dot_NULL.png" style="position: absolute; z-index: 2; max-width: 50px; margin-left: 115px; margin-top: 20 px;">
+                <img id="vibration4" src="source/vibration_dot_NULL.png" style="position: absolute; z-index: 2; max-width: 50px; margin-left: 115px; margin-top: 145px;">
+                <canvas id="vibration_canvas" style="min-height: 25vh;"></canvas>
             </div>
         </div>
     </div>
