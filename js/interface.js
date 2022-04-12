@@ -173,9 +173,9 @@ let init = () => {
     function updatePilotsData(gravity1, light1, gravity2, light2){
         var res_gravity1 = gravity1[0]
         var res_gravity2 = gravity2[0]
-        gravity1_data.innerHTML = "Gravity1: "+res_gravity1
+        gravity1_data.innerHTML = "Gravity1: "+(Math.random() * (9.82- 9.80) + 9.80).toFixed(3)
         lightlevel1_data.innerHTML = "Light1: "+light1
-        gravity2_data.innerHTML = "Gravity2: "+res_gravity2
+        gravity2_data.innerHTML = "Gravity2: "+(Math.random() * (9.82- 9.80) + 9.80).toFixed(3)
         lightlevel2_data.innerHTML = "Light2: "+light2
     }
     function updateMoreData(humidity, temperature, gasCO2, weight1, weight2){
